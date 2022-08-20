@@ -17,7 +17,7 @@ namespace beSecure_AntiVirus
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-
+            // testing commit
         }
     }
 }
