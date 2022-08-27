@@ -10,11 +10,26 @@ using System.Windows.Forms;
 
 namespace beSecure_AntiVirus
 {
-    public partial class Form1 : Form
+    public partial class mainForm : Form
     {
-        public Form1()
+        public mainForm()
         {
             InitializeComponent();
+        }
+
+        private void Minimize_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void BtnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
