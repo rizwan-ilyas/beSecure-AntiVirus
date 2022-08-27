@@ -17,6 +17,9 @@ namespace beSecure_AntiVirus
             InitializeComponent();
         }
 
+        private void HistoryControl_Load(object sender, EventArgs e)
+        {
 
+        }
     }
 }

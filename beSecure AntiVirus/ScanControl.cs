@@ -16,5 +16,20 @@ namespace beSecure_AntiVirus
         {
             InitializeComponent();
         }
+
+        private void PicFullscan_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Full scan");
+        }
+
+        private void PicQuickscan_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Quick scan");
+        }
+
+        private void PicCustomscan_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Custom scan");
+        }
     }
 }

@@ -35,15 +35,15 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.pnlHeader = new System.Windows.Forms.Panel();
-            this.pnlMain = new System.Windows.Forms.Panel();
-            this.btnScan = new System.Windows.Forms.Button();
-            this.lblscan = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.btnSetting = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnHistory = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnSetting = new System.Windows.Forms.Button();
+            this.lblscan = new System.Windows.Forms.Label();
+            this.btnScan = new System.Windows.Forms.Button();
+            this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.pnlHeader.SuspendLayout();
@@ -120,59 +120,25 @@
             this.pnlHeader.Size = new System.Drawing.Size(800, 138);
             this.pnlHeader.TabIndex = 2;
             // 
-            // pnlMain
+            // label5
             // 
-            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMain.Location = new System.Drawing.Point(0, 138);
-            this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(800, 362);
-            this.pnlMain.TabIndex = 3;
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(106, 107);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(81, 16);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "0 days ago";
             // 
-            // btnScan
+            // label2
             // 
-            this.btnScan.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnScan.BackgroundImage")));
-            this.btnScan.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnScan.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnScan.FlatAppearance.BorderSize = 0;
-            this.btnScan.Location = new System.Drawing.Point(240, 57);
-            this.btnScan.Name = "btnScan";
-            this.btnScan.Size = new System.Drawing.Size(47, 47);
-            this.btnScan.TabIndex = 2;
-            this.btnScan.UseVisualStyleBackColor = true;
-            this.btnScan.Click += new System.EventHandler(this.BtnScan_Click);
-            // 
-            // lblscan
-            // 
-            this.lblscan.AutoSize = true;
-            this.lblscan.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblscan.Location = new System.Drawing.Point(243, 107);
-            this.lblscan.Name = "lblscan";
-            this.lblscan.Size = new System.Drawing.Size(41, 16);
-            this.lblscan.TabIndex = 3;
-            this.lblscan.Text = "Scan";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(493, 107);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(63, 16);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Settings";
-            // 
-            // btnSetting
-            // 
-            this.btnSetting.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnSetting.BackgroundImage")));
-            this.btnSetting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnSetting.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnSetting.FlatAppearance.BorderSize = 0;
-            this.btnSetting.Location = new System.Drawing.Point(501, 57);
-            this.btnSetting.Name = "btnSetting";
-            this.btnSetting.Size = new System.Drawing.Size(47, 47);
-            this.btnSetting.TabIndex = 6;
-            this.btnSetting.UseVisualStyleBackColor = true;
-            this.btnSetting.Click += new System.EventHandler(this.BtnSetting_Click);
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(10, 107);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(90, 16);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Last Scan : ";
             // 
             // label4
             // 
@@ -198,25 +164,59 @@
             this.btnHistory.UseVisualStyleBackColor = true;
             this.btnHistory.Click += new System.EventHandler(this.BtnHistory_Click);
             // 
-            // label2
+            // label3
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(10, 107);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(90, 16);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Last Scan : ";
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(493, 107);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(63, 16);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Settings";
             // 
-            // label5
+            // btnSetting
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(106, 107);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(81, 16);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "0 days ago";
+            this.btnSetting.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnSetting.BackgroundImage")));
+            this.btnSetting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSetting.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnSetting.FlatAppearance.BorderSize = 0;
+            this.btnSetting.Location = new System.Drawing.Point(501, 57);
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.Size = new System.Drawing.Size(47, 47);
+            this.btnSetting.TabIndex = 6;
+            this.btnSetting.UseVisualStyleBackColor = true;
+            this.btnSetting.Click += new System.EventHandler(this.BtnSetting_Click);
+            // 
+            // lblscan
+            // 
+            this.lblscan.AutoSize = true;
+            this.lblscan.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblscan.Location = new System.Drawing.Point(243, 107);
+            this.lblscan.Name = "lblscan";
+            this.lblscan.Size = new System.Drawing.Size(41, 16);
+            this.lblscan.TabIndex = 3;
+            this.lblscan.Text = "Scan";
+            // 
+            // btnScan
+            // 
+            this.btnScan.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnScan.BackgroundImage")));
+            this.btnScan.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnScan.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnScan.FlatAppearance.BorderSize = 0;
+            this.btnScan.Location = new System.Drawing.Point(240, 57);
+            this.btnScan.Name = "btnScan";
+            this.btnScan.Size = new System.Drawing.Size(47, 47);
+            this.btnScan.TabIndex = 2;
+            this.btnScan.UseVisualStyleBackColor = true;
+            this.btnScan.Click += new System.EventHandler(this.BtnScan_Click);
+            // 
+            // pnlMain
+            // 
+            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMain.Location = new System.Drawing.Point(0, 138);
+            this.pnlMain.Name = "pnlMain";
+            this.pnlMain.Size = new System.Drawing.Size(800, 362);
+            this.pnlMain.TabIndex = 3;
             // 
             // mainForm
             // 
