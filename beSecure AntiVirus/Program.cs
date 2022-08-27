@@ -10,6 +10,7 @@ namespace beSecure_AntiVirus
     {
         /// <summary>
         /// The main entry point for the application.
+        /// this is to check github
         /// </summary>
         [STAThread]
         static void Main()
