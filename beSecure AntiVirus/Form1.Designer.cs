@@ -35,6 +35,15 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.pnlHeader = new System.Windows.Forms.Panel();
+            this.pnlMain = new System.Windows.Forms.Panel();
+            this.btnScan = new System.Windows.Forms.Button();
+            this.lblscan = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnSetting = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnHistory = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.pnlLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.pnlHeader.SuspendLayout();
@@ -94,18 +103,127 @@
             // 
             // pnlHeader
             // 
+            this.pnlHeader.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.pnlHeader.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlHeader.Controls.Add(this.label5);
+            this.pnlHeader.Controls.Add(this.label2);
+            this.pnlHeader.Controls.Add(this.label4);
+            this.pnlHeader.Controls.Add(this.btnHistory);
+            this.pnlHeader.Controls.Add(this.label3);
+            this.pnlHeader.Controls.Add(this.btnSetting);
+            this.pnlHeader.Controls.Add(this.lblscan);
+            this.pnlHeader.Controls.Add(this.btnScan);
             this.pnlHeader.Controls.Add(this.pnlLogo);
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(801, 129);
+            this.pnlHeader.Size = new System.Drawing.Size(800, 138);
             this.pnlHeader.TabIndex = 2;
+            // 
+            // pnlMain
+            // 
+            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMain.Location = new System.Drawing.Point(0, 138);
+            this.pnlMain.Name = "pnlMain";
+            this.pnlMain.Size = new System.Drawing.Size(800, 362);
+            this.pnlMain.TabIndex = 3;
+            // 
+            // btnScan
+            // 
+            this.btnScan.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnScan.BackgroundImage")));
+            this.btnScan.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnScan.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnScan.FlatAppearance.BorderSize = 0;
+            this.btnScan.Location = new System.Drawing.Point(240, 57);
+            this.btnScan.Name = "btnScan";
+            this.btnScan.Size = new System.Drawing.Size(47, 47);
+            this.btnScan.TabIndex = 2;
+            this.btnScan.UseVisualStyleBackColor = true;
+            this.btnScan.Click += new System.EventHandler(this.BtnScan_Click);
+            // 
+            // lblscan
+            // 
+            this.lblscan.AutoSize = true;
+            this.lblscan.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblscan.Location = new System.Drawing.Point(243, 107);
+            this.lblscan.Name = "lblscan";
+            this.lblscan.Size = new System.Drawing.Size(41, 16);
+            this.lblscan.TabIndex = 3;
+            this.lblscan.Text = "Scan";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(493, 107);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(63, 16);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Settings";
+            // 
+            // btnSetting
+            // 
+            this.btnSetting.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnSetting.BackgroundImage")));
+            this.btnSetting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSetting.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnSetting.FlatAppearance.BorderSize = 0;
+            this.btnSetting.Location = new System.Drawing.Point(501, 57);
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.Size = new System.Drawing.Size(47, 47);
+            this.btnSetting.TabIndex = 6;
+            this.btnSetting.UseVisualStyleBackColor = true;
+            this.btnSetting.Click += new System.EventHandler(this.BtnSetting_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(368, 107);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(54, 16);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "History";
+            this.label4.Click += new System.EventHandler(this.Label4_Click);
+            // 
+            // btnHistory
+            // 
+            this.btnHistory.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnHistory.BackgroundImage")));
+            this.btnHistory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnHistory.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnHistory.FlatAppearance.BorderSize = 0;
+            this.btnHistory.Location = new System.Drawing.Point(372, 57);
+            this.btnHistory.Name = "btnHistory";
+            this.btnHistory.Size = new System.Drawing.Size(47, 47);
+            this.btnHistory.TabIndex = 8;
+            this.btnHistory.UseVisualStyleBackColor = true;
+            this.btnHistory.Click += new System.EventHandler(this.BtnHistory_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(10, 107);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(90, 16);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Last Scan : ";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(106, 107);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(81, 16);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "0 days ago";
             // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(801, 450);
+            this.ClientSize = new System.Drawing.Size(800, 500);
+            this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.pnlHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -116,6 +234,7 @@
             this.pnlLogo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.pnlHeader.ResumeLayout(false);
+            this.pnlHeader.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -128,6 +247,15 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel pnlHeader;
+        private System.Windows.Forms.Panel pnlMain;
+        private System.Windows.Forms.Label lblscan;
+        private System.Windows.Forms.Button btnScan;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnHistory;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnSetting;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label2;
     }
 }
 

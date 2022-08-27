@@ -12,6 +12,10 @@ namespace beSecure_AntiVirus
 {
     public partial class mainForm : Form
     {
+        public Image normalImg { get { return normalImg; } set { normalImg = value; } }
+        public Image hoverImg { get { return hoverImg; } set { hoverImg = value; } }
+
+
         public mainForm()
         {
             InitializeComponent();
@@ -30,6 +34,37 @@ namespace beSecure_AntiVirus
         private void MainForm_Load(object sender, EventArgs e)
         {
 
+        }
+        
+        private void Label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addUserControl(UserControl usercontrol)
+        {
+            usercontrol.Dock = DockStyle.Fill;
+            pnlMain.Controls.Clear();
+            pnlMain.Controls.Add(usercontrol);
+            usercontrol.BringToFront();
+        }
+
+        private void BtnScan_Click(object sender, EventArgs e)
+        {
+            ScanControl scan = new ScanControl();
+            addUserControl(scan);
+        }
+
+        private void BtnHistory_Click(object sender, EventArgs e)
+        {
+            HistoryControl history = new HistoryControl();
+            addUserControl(history);
+        }
+
+        private void BtnSetting_Click(object sender, EventArgs e)
+        {
+            SettingsControl settings = new SettingsControl();
+            addUserControl(settings);
         }
     }
 }
