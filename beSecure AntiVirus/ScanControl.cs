@@ -29,7 +29,23 @@ namespace beSecure_AntiVirus
 
         private void PicCustomscan_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Custom scan");
+            //MessageBox.Show("Custom scan");
+
+            using(var fbd=new FolderBrowserDialog())
+            {
+                DialogResult resultdir = fbd.ShowDialog();
+                if(resultdir==DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    MessageBox.Show(fbd.SelectedPath);
+                }
+                {
+
+                }
+
+
+            }
+
+
         }
     }
 }

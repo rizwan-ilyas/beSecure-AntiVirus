@@ -106,5 +106,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\beSecure.BLL\beSecure.BLL.csproj">
+      <Project>{d7a5eff8-10a0-419f-861d-c4e05d8ad7dd}</Project>
+      <Name>beSecure.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\beSecure.Common\beSecure.Common.csproj">
+      <Project>{88565d60-d76b-4a1f-9975-ef638b646158}</Project>
+      <Name>beSecure.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
