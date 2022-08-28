@@ -7,14 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using beSecure.BLL;
+using beSecure.Common;
 
 namespace beSecure_AntiVirus
 {
     public partial class ScanControl : UserControl
     {
+        AVengine avEngine;
         public ScanControl()
         {
             InitializeComponent();
+            avEngine = new AVengine();
         }
 
         private void PicFullscan_Click(object sender, EventArgs e)
@@ -36,7 +40,15 @@ namespace beSecure_AntiVirus
                 DialogResult resultdir = fbd.ShowDialog();
                 if(resultdir==DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    MessageBox.Show(fbd.SelectedPath);
+                    //MessageBox.Show(fbd.SelectedPath);
+                    avEngine.CustomScan(fbd.SelectedPath);
+                    String s = "";
+                    foreach (var i in avEngine.getScannedFile())
+                    {
+                        s += i.name + "\n";
+                    }
+
+                    MessageBox.Show(s);
                 }
                 {
 

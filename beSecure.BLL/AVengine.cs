@@ -12,20 +12,113 @@ namespace beSecure.BLL
 {
     public class AVengine
     {
-        List<FileDetails> scannedFiles;
+        public static List<FileDetails> scannedFiles;
+        public static List<FileDetails> blackListed;
+        public static List<FileDetails> whiteListed;
+        public static List<FileDetails> noSignedList;
+        public static List<FileDetails> noCertificateList;
+        Databases database;
 
-        AVengine()
+        public AVengine()
         {
             scannedFiles = new List<FileDetails>();
+            whiteListed = new List<FileDetails>();
+            blackListed  = new List<FileDetails>();
+            noSignedList = new List<FileDetails>();
+            noCertificateList = new List<FileDetails>();
+            database = new Databases();
+        }
+
+        public List<FileDetails> getScannedFile()
+        {
+            return scannedFiles;
+        }
+        public List<FileDetails> getWhiteListedFiles()
+        {
+            return whiteListed;
+        }
+        public List<FileDetails> getBlackListedFiles()
+        {
+            return blackListed;
+        }
+        public List<FileDetails> getnoSignedFiles()
+        {
+            return noSignedList;
+        }
+
+
+        public void QuickScan()
+        {
+            
+        }
+
+        public void CustomScan(string path)
+        {
+            Scan(@path);
+        }
+
+        public void Scan(string path, string driveletter = "\0")
+        {
+            String[] files = Directory.GetFiles(path);
+            String[] nextDirecties = Directory.GetDirectories(path);
+
+            foreach (var file in files)
+            {
+                scannedFiles.Add(verifyFile(file));
+            }
+
+            if (nextDirecties.Length != 0)
+            {
+                foreach(var dir in nextDirecties)
+                {
+                    if (driveletter != null)
+                    {
+                        if(dir != driveletter+":\\System Volume Information" && dir != driveletter + ":\\$RECYCLE.BIN")
+                        {
+                            Scan(dir,driveletter);
+                        }
+                    }
+                    else
+                    {
+                        Scan(dir);
+                    }
+                }
+            }
+        }
+
+        public FileDetails verifyFile(String file)
+        {
+            certificateMajor certInfo = getCertDetails(file);
+            FileDetails filedetail = new FileDetails();
+            filedetail.name = file;
+            if (certInfo != null)
+            {
+                int result = database.isWhiteListed(certInfo);
+                switch (result)
+                {
+                    case 0:
+                        filedetail.status = "Not Listed";
+                        noSignedList.Add(filedetail);
+                        break;
+                    case -1:
+                        filedetail.status = "Black Listed";
+                        blackListed.Add(filedetail);
+                        break;
+                    case 1:
+                        filedetail.status = "White Listed";
+                        whiteListed.Add(filedetail);
+                        break;
+                }
+            }
+            filedetail.status="No Certificate";
+            noCertificateList.Add(filedetail);
+            return filedetail;
         }
 
         
 
-        public <> scan(string directory)
-        {
 
-        }
-
+        /*
         public static List<String> traverseDir(String p)
         {
             try
@@ -67,15 +160,17 @@ namespace beSecure.BLL
                 return null;
             }
 
-
-            private certificateMajor getCertDetails(string file)
+        }*/
+        private certificateMajor getCertDetails(string file)
         {
-            try { 
-            X509Certificate signer = X509Certificate.CreateFromSignedFile(@file);
-            X509Certificate2 certificate = new X509Certificate2(signer);
+            try
+            {
+                X509Certificate signer = X509Certificate.CreateFromSignedFile(@file);
+                X509Certificate2 certificate = new X509Certificate2(signer);
 
                 return mouldCertificate(certificate);
-            }catch (System.Security.Cryptography.CryptographicException)
+            }
+            catch (System.Security.Cryptography.CryptographicException)
             {
                 return null;
             }
@@ -90,7 +185,7 @@ namespace beSecure.BLL
             string subject = cert.Subject;
             string issuer = cert.Issuer;
             certificateMajor certinfo = new certificateMajor();
-            foreach(var i in subject.Split(','))
+            foreach (var i in subject.Split(','))
             {
                 string[] temp = i.Split('=');
                 switch (temp[0].Trim(' '))
@@ -103,7 +198,7 @@ namespace beSecure.BLL
                         break;
                 }
             }
-            foreach(var i in issuer.Split(','))
+            foreach (var i in issuer.Split(','))
             {
                 string[] temp = i.Split('=');
                 if (temp[0].Trim(' ') == "O")
@@ -118,6 +213,6 @@ namespace beSecure.BLL
 
 
 
-        
+
     }
 }

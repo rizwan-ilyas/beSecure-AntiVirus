@@ -8,16 +8,24 @@ using beSecure.Common;
 
 namespace beSecure.DAL
 {
-    public class databases
+    public class Databases
     {
         public String connectionString;
-        public MySqlConnection myConnection;
+        public static MySqlConnection myConnection;
 
-        public databases()
+        public Databases()
         {
-            connectionString= System.Configuration.ConfigurationManager.ConnectionStrings["defaultConnection"].ConnectionString;
+            try
+            {
+                connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["defaultConnection"].ConnectionString;
+                openConnection();
+            }catch(Exception e)
+            {
+                throw (e);
+            }
+            
         }
-        public databases(string conStr)
+        public Databases(string conStr)
         {
             connectionString = conStr;
         }
@@ -79,11 +87,11 @@ namespace beSecure.DAL
             }
         }
 
-        public int isWhiteListed(CertificateInfo cInfo)
+        public int isWhiteListed(certificateMajor cInfo)
         {
             try
             {
-                string query = "select isBlackListed from whitelist where sName='" + cInfo.name + "',sOrganization='" + cInfo.organization + "', iName='" + cInfo.iName + "',iOrganization='" + cInfo.iOrganization + "',publicKey= '" + cInfo.publicKey + "';";
+                string query = "select isBlackListed from whitelist where sName='" + cInfo.name + "',sOrganization='" + cInfo.organization + "',iOrganization='" + cInfo.iOrganization + "',publicKey= '" + cInfo.publicKey + "';";
                 MySqlCommand myCom = new MySqlCommand(query);
                 var data = myCom.ExecuteReader();
                 if (data.HasRows)
@@ -105,10 +113,10 @@ namespace beSecure.DAL
 
             }
         }
-        ~databases()
+        ~Databases()
         {
             this.closeConnection();
-            this.myConnection = null;
+            myConnection = null;
             this.connectionString = null;
         }
 
