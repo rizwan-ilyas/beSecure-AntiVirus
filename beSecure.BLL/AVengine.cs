@@ -7,6 +7,7 @@ using beSecure.Common;
 using beSecure.DAL;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.AccessControl;
 
 namespace beSecure.BLL
 {
@@ -18,6 +19,7 @@ namespace beSecure.BLL
         public static List<FileDetails> noSignedList;
         public static List<FileDetails> noCertificateList;
         Databases database;
+        String qurantineAddress;
 
         public AVengine()
         {
@@ -27,6 +29,7 @@ namespace beSecure.BLL
             noSignedList = new List<FileDetails>();
             noCertificateList = new List<FileDetails>();
             database = new Databases();
+            qurantineAddress = @"D:\Quarantine";
         }
 
         public List<FileDetails> getScannedFile()
@@ -49,17 +52,43 @@ namespace beSecure.BLL
 
         public void QuickScan()
         {
-            
+            String drive="";
+            foreach (var d in DriveInfo.GetDrives())
+            {
+                drive = @d.ToString();
+                if (drive != "C:\\")
+                {
+                    Scan(drive, drive.Split(':')[0]);
+                }
+                
+            }
         }
 
         public void CustomScan(string path)
         {
-            Scan(@path);
+            if (path.Length == 3)
+            {
+                Scan(@path, path.Split(':')[0]);
+            }
+            else {
+                Scan(@path);
+            }
+            
         }
 
         public void Scan(string path, string driveletter = "\0")
         {
-            String[] files = Directory.GetFiles(path);
+            try {
+                String[] files;
+                if (driveletter != "\0")
+                {
+                    files = Directory.GetFiles(path);
+                }
+                else
+                {
+                    files = Directory.GetFiles(path, "*.exe*", SearchOption.AllDirectories);
+                }
+           
             String[] nextDirecties = Directory.GetDirectories(path);
 
             foreach (var file in files)
@@ -71,9 +100,9 @@ namespace beSecure.BLL
             {
                 foreach(var dir in nextDirecties)
                 {
-                    if (driveletter != null)
+                    if (driveletter != "\0")
                     {
-                        if(dir != driveletter+":\\System Volume Information" && dir != driveletter + ":\\$RECYCLE.BIN")
+                        if(dir != driveletter+":\\System Volume Information" && dir != driveletter + ":\\$RECYCLE.BIN" && dir!= "C:\\Documents" && dir!="C:\\Settings")
                         {
                             Scan(dir,driveletter);
                         }
@@ -83,6 +112,10 @@ namespace beSecure.BLL
                         Scan(dir);
                     }
                 }
+            }
+            }catch(Exception e)
+            {
+                throw (e);
             }
         }
 
@@ -99,10 +132,13 @@ namespace beSecure.BLL
                     case 0:
                         filedetail.status = "Not Listed";
                         noSignedList.Add(filedetail);
+                        //qurantineFile(filedetail.name);
                         break;
                     case -1:
                         filedetail.status = "Black Listed";
                         blackListed.Add(filedetail);
+                        //deleteVirus(filedetail.name);
+                        
                         break;
                     case 1:
                         filedetail.status = "White Listed";
@@ -115,52 +151,20 @@ namespace beSecure.BLL
             return filedetail;
         }
 
-        
-
-
-        /*
-        public static List<String> traverseDir(String p)
+        private bool deleteVirus(String file)
         {
             try
             {
-                ;
-                //"E:\\$RECYCLE.BIN"
-                //"E:\\System Volume Information"
-                //IEnumerable<String> files = Directory.GetFiles(p, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".pdf") || s.EndsWith(".exe"));
-
-                String[] files = Directory.GetFiles(p);
-                String[] dirct = Directory.GetDirectories(p);
-                if (dirct.Length == 0)
-                {
-                    allFiles.AddRange(files);
-                    //printFiles(files); 
-                    return allFiles;
-                }
-                else
-                {
-                    foreach (var d in dirct)
-                    {
-                        if (d != "D:\\System Volume Information" && d != "D:\\$RECYCLE.BIN")
-                        {
-                            traverseDir(d);
-                        }
-
-                    }
-                    //printFiles(files);
-                    allFiles.AddRange(files);
-                    return allFiles;
-                }
-
-
-
-            }
-            catch (Exception e)
+                File.Delete(@file);
+                return true;
+            }catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
-                return null;
+                throw (e);
             }
+        }
+        
 
-        }*/
+
         private certificateMajor getCertDetails(string file)
         {
             try
@@ -211,7 +215,27 @@ namespace beSecure.BLL
             return certinfo;
         }
 
+       public Boolean qurantineFile(String file)
+        {
+            try {
 
+                //FileSecurity fileSecurity = new FileSecurity(file);
+                /* var noExeRule = new FileSystemAccessRule(file, FileSystemRights.ExecuteFile, AccessControlType.Deny);
+                 FileSecurity fileSecurity = new FileSecurity();
+                 fileSecurity.AddAccessRule(noExeRule);
+                     File.SetAccessControl(file, fileSecurity);*/
+                
+
+            File.Move(file, qurantineAddress);
+                return true;
+            }catch (Exception e)
+            {
+                throw (e);
+            }
+        }
+
+
+       
 
 
     }

@@ -18,7 +18,7 @@ namespace beSecure.DAL
             try
             {
                 connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["defaultConnection"].ConnectionString;
-                openConnection();
+                //openConnection();
             }catch(Exception e)
             {
                 throw (e);
@@ -28,6 +28,7 @@ namespace beSecure.DAL
         public Databases(string conStr)
         {
             connectionString = conStr;
+            //openConnection();
         }
 
         private bool openConnection()
@@ -89,29 +90,41 @@ namespace beSecure.DAL
 
         public int isWhiteListed(certificateMajor cInfo)
         {
+
             try
             {
-                string query = "select isBlackListed from whitelist where sName='" + cInfo.name + "',sOrganization='" + cInfo.organization + "',iOrganization='" + cInfo.iOrganization + "',publicKey= '" + cInfo.publicKey + "';";
-                MySqlCommand myCom = new MySqlCommand(query);
-                var data = myCom.ExecuteReader();
-                if (data.HasRows)
+                using (MySqlConnection myCon = new MySqlConnection(connectionString))
                 {
-                    data.Read();
-                    if ((bool)data["isBlackListed"])
+                    myCon.Open();
+                    string query = "select isBlackListed from whitelist where sName='" + cInfo.name + "' and sOrganization='" + cInfo.organization + "' and iOrganization='" + cInfo.iOrganization + "' and publicKey='" + cInfo.publicKey + "';";
+
+                    MySqlCommand myCom = new MySqlCommand(query, myCon);
+                    var data = myCom.ExecuteReader();
+                    if (data.HasRows)
                     {
-                        return -1;
+                        data.Read();
+                        if ((Boolean)data["isBlackListed"])
+                        {
+                            closeConnection();
+                            return -1;
+                        }
+                        else
+                        {
+                            closeConnection();
+                            return 1;
+                        }
                     }
-                    else
-                    {
-                        return 1;
-                    }
+                    closeConnection();
+                    return 0;
+
                 }
-                return 0;
-            }catch(Exception e)
+                }catch (Exception e)
             {
+
                 throw (e);
 
             }
+        
         }
         ~Databases()
         {
