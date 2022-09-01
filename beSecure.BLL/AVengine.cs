@@ -20,6 +20,8 @@ namespace beSecure.BLL
         public static List<FileDetails> noCertificateList;
         Databases database;
         String qurantineAddress;
+        String CurrentFile;
+        public String path;
 
         public AVengine()
         {
@@ -30,6 +32,8 @@ namespace beSecure.BLL
             noCertificateList = new List<FileDetails>();
             database = new Databases();
             qurantineAddress = @"D:\Quarantine";
+            CurrentFile = "";
+            path = "";
         }
 
         public List<FileDetails> getScannedFile()
@@ -64,7 +68,7 @@ namespace beSecure.BLL
             }
         }
 
-        public void CustomScan(string path)
+        public void CustomScan()
         {
             if (path.Length == 3)
             {
@@ -93,6 +97,7 @@ namespace beSecure.BLL
 
             foreach (var file in files)
             {
+                    CurrentFile = file;
                 scannedFiles.Add(verifyFile(file));
             }
 
@@ -234,7 +239,10 @@ namespace beSecure.BLL
             }
         }
 
-
+        public string getCurrentFile()
+        {
+            return CurrentFile;
+        }
        
 
 

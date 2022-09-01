@@ -70,12 +70,37 @@ namespace beSecure_AntiVirus
                 {
                     //MessageBox.Show(fbd.SelectedPath);
                     //int noFiles = System.IO.Directory.GetFileSystemEntries(fbd.SelectedPath, ".", System.IO.SearchOption.AllDirectories).Length;
-                    MessageBox.Show(noFiles.ToString());
-                    avEngine.CustomScan(fbd.SelectedPath);
+                    // MessageBox.Show(noFiles.ToString());
+                    String temp = "";
+                    List<String> str = new List<String>();
+                   
+                    avEngine.path = @fbd.SelectedPath;
+                    Thread myThread = new Thread(new ThreadStart(avEngine.CustomScan));
+                    myThread.Start();
+                    while (myThread.IsAlive)
+                    {
+                        temp = avEngine.getCurrentFile();
+                        if (str.Count == 0)
+                        {
+                            str.Add(temp);
+                        }
+                        else
+                        {
+                            if (temp != str.Last())
+                            {
+                                str.Add(avEngine.getCurrentFile());
+                            }
+                        }
+                        
+                        
+                    }
+
 
                     String s = "White Listed \n";
                     String b = "Black Listed\n";
                     String n = "Not Listed\n";
+                    String a = "Scanned Listed\n";
+                    
                     foreach (var i in avEngine.getWhiteListedFiles())
                     {
                         s += i.name + "\n";
@@ -96,7 +121,13 @@ namespace beSecure_AntiVirus
                     }
 
                     MessageBox.Show(n);
+                    foreach (var i in str)
+                    {
+                        a += i + "\n";
+                    }
+                    MessageBox.Show(a);
 
+                     myThread.Abort();
 
 
                 }
