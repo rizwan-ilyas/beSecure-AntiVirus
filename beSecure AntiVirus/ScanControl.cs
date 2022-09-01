@@ -73,7 +73,16 @@ namespace beSecure_AntiVirus
                     // MessageBox.Show(noFiles.ToString());
                     String temp = "";
                     List<String> str = new List<String>();
-                   
+
+                    ProgressControl progress = new ProgressControl();
+                    
+                    addUserControl(progress);
+                    //Thread.Sleep(1000);
+                    
+                    progress.StartScannig(fbd.SelectedPath);
+
+
+                    /*
                     avEngine.path = @fbd.SelectedPath;
                     Thread myThread = new Thread(new ThreadStart(avEngine.CustomScan));
                     myThread.Start();
@@ -128,7 +137,7 @@ namespace beSecure_AntiVirus
                     MessageBox.Show(a);
 
                      myThread.Abort();
-
+                     */
 
                 }
                 
@@ -138,5 +147,19 @@ namespace beSecure_AntiVirus
 
 
         }
+
+        private void addUserControl(UserControl usercontrol)
+        {
+            usercontrol.Dock = DockStyle.Fill;
+            this.Controls.Clear();
+            this.Controls.Add(usercontrol);
+            usercontrol.BringToFront();
+        }
+
+
+
+
+
+
     }
 }

@@ -72,6 +72,8 @@ namespace beSecure.BLL
         {
             if (path.Length == 3)
             {
+
+                //throw (new Exception("Drive Letter"));
                 Scan(@path, path.Split(':')[0]);
             }
             else {
