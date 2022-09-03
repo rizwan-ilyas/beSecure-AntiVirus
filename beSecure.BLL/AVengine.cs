@@ -13,11 +13,13 @@ namespace beSecure.BLL
 {
     public class AVengine
     {
+        public event UpdateControlDel updateForm;
         public static List<FileDetails> scannedFiles;
         public static List<FileDetails> blackListed;
         public static List<FileDetails> whiteListed;
         public static List<FileDetails> noSignedList;
         public static List<FileDetails> noCertificateList;
+        
         Databases database;
         String qurantineAddress;
         String CurrentFile;
@@ -63,6 +65,7 @@ namespace beSecure.BLL
                 if (drive != "C:\\")
                 {
                     Scan(drive, drive.Split(':')[0]);
+                    
                 }
                 
             }
@@ -101,6 +104,7 @@ namespace beSecure.BLL
             {
                     CurrentFile = file;
                 scannedFiles.Add(verifyFile(file));
+                //updateForm(1, file); 
             }
 
             if (nextDirecties.Length != 0)
@@ -131,6 +135,7 @@ namespace beSecure.BLL
             certificateMajor certInfo = getCertDetails(file);
             FileDetails filedetail = new FileDetails();
             filedetail.name = file;
+            filedetail.time = DateTime.Now;
             if (certInfo != null)
             {
                 int result = database.isWhiteListed(certInfo);

@@ -89,6 +89,7 @@ namespace beSecure_AntiVirus
             this.Controls.Add(this.CircularBar);
             this.Name = "ProgressControl";
             this.Size = new System.Drawing.Size(800, 360);
+            this.Load += new System.EventHandler(this.ProgressControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

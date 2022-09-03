@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using beSecure.BLL;
 using beSecure.Common;
 using System.Threading;
+using System.IO;
 
 namespace beSecure_AntiVirus
 {
@@ -71,15 +72,16 @@ namespace beSecure_AntiVirus
                     //MessageBox.Show(fbd.SelectedPath);
                     //int noFiles = System.IO.Directory.GetFileSystemEntries(fbd.SelectedPath, ".", System.IO.SearchOption.AllDirectories).Length;
                     // MessageBox.Show(noFiles.ToString());
-                    String temp = "";
-                    List<String> str = new List<String>();
 
                     ProgressControl progress = new ProgressControl();
                     
                     addUserControl(progress);
-                    //Thread.Sleep(1000);
-                    
                     progress.StartScannig(fbd.SelectedPath);
+
+
+                    //Thread.Sleep(1000);
+
+
 
 
                     /*
@@ -148,9 +150,11 @@ namespace beSecure_AntiVirus
 
         }
 
+        
+
         private void addUserControl(UserControl usercontrol)
         {
-            usercontrol.Dock = DockStyle.Fill;
+            //usercontrol.Dock = DockStyle.Fill;
             this.Controls.Clear();
             this.Controls.Add(usercontrol);
             usercontrol.BringToFront();

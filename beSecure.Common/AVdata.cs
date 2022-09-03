@@ -35,6 +35,7 @@ namespace beSecure.Common
     {
         public string name { get; set; }
         public string status { get; set; }
+        public DateTime time { get; set; }
     }
 
 

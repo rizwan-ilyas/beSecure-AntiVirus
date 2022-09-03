@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using beSecure.BLL;
 using System.Threading;
+using System.IO;
 
 namespace beSecure_AntiVirus
 {
@@ -18,42 +19,32 @@ namespace beSecure_AntiVirus
         public ProgressControl()
         {
             InitializeComponent();
-            
+            avEngine = new AVengine();
         }
 
 
         public ProgressControl(string path)
         {
-
+            InitializeComponent();
             avEngine = new AVengine();
             StartScannig(@path);
         }
-
+        
         public void StartScannig(string path)
         {
             try
             {
-                avEngine = new AVengine();
+                
+                //avEngine.updateForm += AvEngine_updateForm;
                 avEngine.path = path;
-
-                Thread myThread = new Thread(new ThreadStart(avEngine.CustomScan));
+                avEngine.CustomScan();
+                //Thread myThread = new Thread(new ThreadStart(avEngine.CustomScan));
                 //myThread.Join();
-                myThread.Start();
+                //myThread.Start();
                 
                 string temp = "";
                 string prevTemp = "";
-
-
-               /* while (myThread.IsAlive)
-                {
-                    temp = avEngine.getCurrentFile();
-                    if (temp != prevTemp)
-                    {
-                        lblFiles.Text = temp;
-                        prevTemp = temp;
-                    }
-                    Thread.Sleep(1000);
-                }*/
+                
 
 
                 String s = "White Listed \n";
@@ -82,8 +73,15 @@ namespace beSecure_AntiVirus
 
                 MessageBox.Show(n);
 
+                foreach (var i in avEngine.getScannedFile())
+                {
+                    a += i.name + "\n";
+                }
 
-                myThread.Abort();
+                MessageBox.Show(a);
+                updateVirusList();
+
+               // myThread.Abort();
             }
             catch (Exception e)
             {
@@ -95,7 +93,45 @@ namespace beSecure_AntiVirus
 
         }
 
+        public void updateVirusList()
+        {
+            try
+            {
+                string data = "";
+                foreach (var item in avEngine.getBlackListedFiles())
+                {
+                    data += item.name.Split('\\').Last() + "," + item.name + "," + item.time.ToString() + "\n";
+                }
+                
+                File.AppendAllText("Viruses.txt", data);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+        }
+       //ChromeSetup.exe
 
+        private void AvEngine_updateForm(int id, string Folder)
+        {
+            lblFiles.Text = Folder;
+        }
+
+      
+        private void ProgressControl_updateForm(int progress, string folderName)
+        {
+            this.lblFiles.Text = folderName;
+        }
+
+        private void ProgressControl_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        public void setCurrentFile(String f)
+        {
+            lblFiles.Text = f;
+        }
 
 
     }
