@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using beSecure.Common;
 using beSecure.DAL;
 using System.IO;
@@ -65,7 +66,6 @@ namespace beSecure.BLL
                 if (drive != "C:\\")
                 {
                     Scan(drive, drive.Split(':')[0]);
-                    
                 }
                 
             }
@@ -75,8 +75,6 @@ namespace beSecure.BLL
         {
             if (path.Length == 3)
             {
-
-                //throw (new Exception("Drive Letter"));
                 Scan(@path, path.Split(':')[0]);
             }
             else {
@@ -104,7 +102,7 @@ namespace beSecure.BLL
             {
                     CurrentFile = file;
                 scannedFiles.Add(verifyFile(file));
-                //updateForm(1, file); 
+                updateForm(1, file); 
             }
 
             if (nextDirecties.Length != 0)

@@ -19,78 +19,30 @@ namespace beSecure_AntiVirus
         public ProgressControl()
         {
             InitializeComponent();
-            avEngine = new AVengine();
         }
-
+        string path;
+   
 
         public ProgressControl(string path)
         {
             InitializeComponent();
             avEngine = new AVengine();
-            StartScannig(@path);
+            //StartScannig(@path);
+            this.path = path;
         }
         
         public void StartScannig(string path)
         {
-            try
-            {
-                
-                //avEngine.updateForm += AvEngine_updateForm;
-                avEngine.path = path;
-                avEngine.CustomScan();
-                //Thread myThread = new Thread(new ThreadStart(avEngine.CustomScan));
-                //myThread.Join();
-                //myThread.Start();
-                
-                string temp = "";
-                string prevTemp = "";
-                
 
-
-                String s = "White Listed \n";
-                String b = "Black Listed\n";
-                String n = "Not Listed\n";
-                String a = "Scanned Listed\n";
-
-                foreach (var i in avEngine.getWhiteListedFiles())
-                {
-                    s += i.name + "\n";
-                }
-
-                MessageBox.Show(s);
-
-                foreach (var i in avEngine.getBlackListedFiles())
-                {
-                    b += i.name + "\n";
-                }
-
-                MessageBox.Show(b);
-
-                foreach (var i in avEngine.getnoSignedFiles())
-                {
-                    n += i.name + "\n";
-                }
-
-                MessageBox.Show(n);
-
-                foreach (var i in avEngine.getScannedFile())
-                {
-                    a += i.name + "\n";
-                }
-
-                MessageBox.Show(a);
-                updateVirusList();
-
-               // myThread.Abort();
-            }
-            catch (Exception e)
-            {
-                throw (e);
-            }
+            backgroundWorker1.RunWorkerAsync();
 
 
 
+        }
 
+        private void AvEngine_updateForm1(int id, string Folder)
+        {
+            this.lblFiles.Text = Folder;
         }
 
         public void updateVirusList()
@@ -125,6 +77,10 @@ namespace beSecure_AntiVirus
 
         private void ProgressControl_Load(object sender, EventArgs e)
         {
+
+            //this.BeginInvoke((MethodInvoker)this.SomeMethod);
+
+            this.StartScannig(this.path);
             
         }
 
@@ -133,6 +89,79 @@ namespace beSecure_AntiVirus
             lblFiles.Text = f;
         }
 
+        private void CircularBar_Click(object sender, EventArgs e)
+        {
 
+        }
+
+        private void BackgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                avEngine = new AVengine();
+                //avEngine.updateForm += AvEngine_updateForm;
+                avEngine.path = path;
+                avEngine.updateForm += AvEngine_updateForm1;
+                avEngine.CustomScan();
+                //Thread myThread = new Thread(new ThreadStart(avEngine.CustomScan));
+                //myThread.Join();
+                //myThread.Start();
+
+                while (Thread.CurrentThread.IsAlive)
+                {
+                    this.lblFiles.Text += avEngine.getCurrentFile();
+                }
+
+
+                string temp = "";
+                string prevTemp = "";
+
+
+
+                //String s = "White Listed \n";
+                //String b = "Black Listed\n";
+                //String n = "Not Listed\n";
+                //String a = "Scanned Listed\n";
+
+                //foreach (var i in avEngine.getWhiteListedFiles())
+                //{
+                //    s += i.name + "\n";
+                //}
+
+                //MessageBox.Show(s);
+
+                //foreach (var i in avEngine.getBlackListedFiles())
+                //{
+                //    b += i.name + "\n";
+                //}
+
+                //MessageBox.Show(b);
+
+                //foreach (var i in avEngine.getnoSignedFiles())
+                //{
+                //    n += i.name + "\n";
+                //}
+
+                //MessageBox.Show(n);
+
+                //foreach (var i in avEngine.getScannedFile())
+                //{
+                //    a += i.name + "\n";
+                //}
+
+                //MessageBox.Show(a);
+                //updateVirusList();
+
+            }
+            catch (Exception eee)
+            {
+                throw (eee);
+            }
+        }
+
+        private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+        }
     }
 }

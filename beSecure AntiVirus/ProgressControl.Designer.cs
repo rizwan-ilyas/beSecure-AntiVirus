@@ -27,6 +27,8 @@ namespace beSecure_AntiVirus
             this.CircularBar = new CircularProgressBar.CircularProgressBar();
             this.lblFiles = new System.Windows.Forms.Label();
             this.lblProcessing = new System.Windows.Forms.Label();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // CircularBar
@@ -59,6 +61,7 @@ namespace beSecure_AntiVirus
             this.CircularBar.TabIndex = 0;
             this.CircularBar.TextMargin = new System.Windows.Forms.Padding(8, 8, 0, 0);
             this.CircularBar.Value = 68;
+            this.CircularBar.Click += new System.EventHandler(this.CircularBar_Click);
             // 
             // lblFiles
             // 
@@ -80,6 +83,11 @@ namespace beSecure_AntiVirus
             this.lblProcessing.TabIndex = 2;
             this.lblProcessing.Text = "Processing Files...";
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker1_DoWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker1_RunWorkerCompleted);
+            // 
             // ProgressControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -100,10 +108,7 @@ namespace beSecure_AntiVirus
         private CircularProgressBar.CircularProgressBar CircularBar;
         private System.Windows.Forms.Label lblFiles;
         private System.Windows.Forms.Label lblProcessing;
-        
-
-
-
-
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker2;
     }
 }

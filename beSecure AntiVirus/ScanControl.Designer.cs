@@ -30,14 +30,15 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScanControl));
             this.label1 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlScan = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.picCustomscan = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.picQuickscan = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.picFullscan = new System.Windows.Forms.PictureBox();
-            this.panel1.SuspendLayout();
+            this.pnlMain = new System.Windows.Forms.Panel();
+            this.pnlScan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picCustomscan)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picQuickscan)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFullscan)).BeginInit();
@@ -52,19 +53,19 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "This is Scan Control";
             // 
-            // panel1
+            // pnlScan
             // 
-            this.panel1.BackColor = System.Drawing.Color.LightCyan;
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.picCustomscan);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.picQuickscan);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.picFullscan);
-            this.panel1.Location = new System.Drawing.Point(76, 56);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(648, 236);
-            this.panel1.TabIndex = 1;
+            this.pnlScan.BackColor = System.Drawing.Color.LightCyan;
+            this.pnlScan.Controls.Add(this.label4);
+            this.pnlScan.Controls.Add(this.picCustomscan);
+            this.pnlScan.Controls.Add(this.label3);
+            this.pnlScan.Controls.Add(this.picQuickscan);
+            this.pnlScan.Controls.Add(this.label2);
+            this.pnlScan.Controls.Add(this.picFullscan);
+            this.pnlScan.Location = new System.Drawing.Point(76, 56);
+            this.pnlScan.Name = "pnlScan";
+            this.pnlScan.Size = new System.Drawing.Size(648, 236);
+            this.pnlScan.TabIndex = 1;
             // 
             // label4
             // 
@@ -135,16 +136,25 @@
             this.picFullscan.TabStop = false;
             this.picFullscan.Click += new System.EventHandler(this.PicFullscan_Click);
             // 
+            // pnlMain
+            // 
+            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMain.Location = new System.Drawing.Point(0, 0);
+            this.pnlMain.Name = "pnlMain";
+            this.pnlMain.Size = new System.Drawing.Size(800, 360);
+            this.pnlMain.TabIndex = 2;
+            // 
             // ScanControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnlScan);
+            this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.label1);
             this.Name = "ScanControl";
             this.Size = new System.Drawing.Size(800, 360);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnlScan.ResumeLayout(false);
+            this.pnlScan.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picCustomscan)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picQuickscan)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFullscan)).EndInit();
@@ -156,12 +166,13 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlScan;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox picFullscan;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox picCustomscan;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox picQuickscan;
+        private System.Windows.Forms.Panel pnlMain;
     }
 }

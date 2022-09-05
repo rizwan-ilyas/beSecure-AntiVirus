@@ -16,9 +16,9 @@ namespace beSecure_AntiVirus
 {
     public partial class ScanControl : UserControl
     {
+
         AVengine avEngine;
-       // Thread quickScanThread;
-        //Thread customScanThread;
+        public scanDelegate scDel; 
         public ScanControl()
         {
             InitializeComponent();
@@ -62,29 +62,40 @@ namespace beSecure_AntiVirus
 
         private void PicCustomscan_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("Custom scan");
-
+            // sir this is the starting code at which user selects directory
             using(var fbd=new FolderBrowserDialog())
             {
                 DialogResult resultdir = fbd.ShowDialog();
                 if(resultdir==DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    //MessageBox.Show(fbd.SelectedPath);
-                    //int noFiles = System.IO.Directory.GetFileSystemEntries(fbd.SelectedPath, ".", System.IO.SearchOption.AllDirectories).Length;
-                    // MessageBox.Show(noFiles.ToString());
-
-                    ProgressControl progress = new ProgressControl();
-                    
+                    // this is for 00
+                    ProgressControl progress = new ProgressControl(fbd.SelectedPath);
                     addUserControl(progress);
-                    progress.StartScannig(fbd.SelectedPath);
+
+                   
+                    
+
+                    
+
+
+
+
+                    //progress.ActiveControl.Visible = true;
+                    //progress.BringToFront();
+
+                    //addUserControl(progress);
+
+                    //progress.StartScannig(fbd.SelectedPath);
+                    //Thread.CurrentThread.Join();
 
 
                     //Thread.Sleep(1000);
 
-
-
-
                     /*
+                     //MessageBox.Show(fbd.SelectedPath);
+                    //int noFiles = System.IO.Directory.GetFileSystemEntries(fbd.SelectedPath, ".", System.IO.SearchOption.AllDirectories).Length;
+                    // MessageBox.Show(noFiles.ToString());
+
                     avEngine.path = @fbd.SelectedPath;
                     Thread myThread = new Thread(new ThreadStart(avEngine.CustomScan));
                     myThread.Start();
@@ -142,7 +153,7 @@ namespace beSecure_AntiVirus
                      */
 
                 }
-                
+
 
 
             }
@@ -154,7 +165,7 @@ namespace beSecure_AntiVirus
 
         private void addUserControl(UserControl usercontrol)
         {
-            //usercontrol.Dock = DockStyle.Fill;
+            usercontrol.Dock = DockStyle.Fill;
             this.Controls.Clear();
             this.Controls.Add(usercontrol);
             usercontrol.BringToFront();

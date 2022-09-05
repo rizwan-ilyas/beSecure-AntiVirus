@@ -70,6 +70,7 @@
     <Compile Include="HistoryControl.Designer.cs">
       <DependentUpon>HistoryControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="myUIdelgates.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProgressControl.cs">
       <SubType>UserControl</SubType>
