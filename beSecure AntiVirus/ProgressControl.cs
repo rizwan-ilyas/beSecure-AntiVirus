@@ -16,33 +16,42 @@ namespace beSecure_AntiVirus
     public partial class ProgressControl : UserControl
     {
         public AVengine avEngine;
+        string path;
+        bool isQuickScan;
+        public processing process;
         public ProgressControl()
         {
             InitializeComponent();
         }
-        string path;
-   
+
+        public ProgressControl(bool isQuickScane)
+        {
+            InitializeComponent();
+            this.isQuickScan = isQuickScane;
+            //avEngine = new AVengine();
+        }
+
 
         public ProgressControl(string path)
         {
             InitializeComponent();
-            avEngine = new AVengine();
-            //StartScannig(@path);
+           // avEngine = new AVengine();
             this.path = path;
         }
         
-        public void StartScannig(string path)
+        public void StartScannig()
         {
-
             backgroundWorker1.RunWorkerAsync();
-
-
-
         }
 
-        private void AvEngine_updateForm1(int id, string Folder)
+        private void AvEngine_updateForm(int id, string file)
         {
-            this.lblFiles.Text = Folder;
+            this.lblFiles.Text = file;
+            int b = avEngine.noOfFiles;
+            int na = id * 100 / avEngine.noOfFiles;
+            lblnoFiles.Text = id.ToString();
+            CircularBar.Text = na.ToString() + "%";
+            CircularBar.Value = na;
         }
 
         public void updateVirusList()
@@ -64,104 +73,72 @@ namespace beSecure_AntiVirus
         }
        //ChromeSetup.exe
 
-        private void AvEngine_updateForm(int id, string Folder)
-        {
-            lblFiles.Text = Folder;
-        }
-
-      
-        private void ProgressControl_updateForm(int progress, string folderName)
-        {
-            this.lblFiles.Text = folderName;
-        }
 
         private void ProgressControl_Load(object sender, EventArgs e)
         {
-
             //this.BeginInvoke((MethodInvoker)this.SomeMethod);
-
-            this.StartScannig(this.path);
-            
+            this.StartScannig();
         }
 
-        public void setCurrentFile(String f)
-        {
-            lblFiles.Text = f;
-        }
-
-        private void CircularBar_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void BackgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             try
             {
+                
                 avEngine = new AVengine();
-                //avEngine.updateForm += AvEngine_updateForm;
-                avEngine.path = path;
-                avEngine.updateForm += AvEngine_updateForm1;
-                avEngine.CustomScan();
-                //Thread myThread = new Thread(new ThreadStart(avEngine.CustomScan));
-                //myThread.Join();
-                //myThread.Start();
-
-                while (Thread.CurrentThread.IsAlive)
+                if (isQuickScan)
                 {
-                    this.lblFiles.Text += avEngine.getCurrentFile();
+                    avEngine.QuickScan();
+                    //avEngine.path = path;
                 }
+                else
+                {
+                    avEngine.path = path;
+                }
+                
+                filetimer.Start();
+                avEngine.getAllFiles();
 
+                lblProcessing.Text = "File Scannning is In Progress....";
+                //filetimer.Stop();
+                WaitProgress.Visible = false;
 
-                string temp = "";
-                string prevTemp = "";
-
-
-
-                //String s = "White Listed \n";
-                //String b = "Black Listed\n";
-                //String n = "Not Listed\n";
-                //String a = "Scanned Listed\n";
-
-                //foreach (var i in avEngine.getWhiteListedFiles())
-                //{
-                //    s += i.name + "\n";
-                //}
-
-                //MessageBox.Show(s);
-
-                //foreach (var i in avEngine.getBlackListedFiles())
-                //{
-                //    b += i.name + "\n";
-                //}
-
-                //MessageBox.Show(b);
-
-                //foreach (var i in avEngine.getnoSignedFiles())
-                //{
-                //    n += i.name + "\n";
-                //}
-
-                //MessageBox.Show(n);
-
-                //foreach (var i in avEngine.getScannedFile())
-                //{
-                //    a += i.name + "\n";
-                //}
-
-                //MessageBox.Show(a);
-                //updateVirusList();
+                avEngine.updateForm += AvEngine_updateForm;
+                if (!isQuickScan)
+                {
+                    avEngine.CustomScan();
+                }
+                //Thread scanThread = new Thread(new ThreadStart(avEngine.CustomScan));
+                //scanThread.Start();
 
             }
             catch (Exception eee)
             {
-                throw (eee);
+                MessageBox.Show(eee.ToString());
             }
         }
 
         private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            //scanThread.Abort();
+        }
 
+        private void stopTimer()
+        {
+            lblProcessing.Text = "File Scannning is In Progress....";
+            filetimer.Stop();
+            WaitProgress.Visible = false;
+        }
+
+        private void Filetimer_Tick(object sender, EventArgs e)
+        {
+            WaitProgress.Value += 1;
+            if (WaitProgress.Value >= 99)
+            {
+                WaitProgress.Value = 1;
+            }
         }
     }
 }

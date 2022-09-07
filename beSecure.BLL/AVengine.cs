@@ -25,6 +25,8 @@ namespace beSecure.BLL
         String qurantineAddress;
         String CurrentFile;
         public String path;
+        public int noOfFiles;
+        public int ProcessednoFiles;
 
         public AVengine()
         {
@@ -37,6 +39,7 @@ namespace beSecure.BLL
             qurantineAddress = @"D:\Quarantine";
             CurrentFile = "";
             path = "";
+            ProcessednoFiles = 1;
         }
 
         public List<FileDetails> getScannedFile()
@@ -63,9 +66,10 @@ namespace beSecure.BLL
             foreach (var d in DriveInfo.GetDrives())
             {
                 drive = @d.ToString();
-                if (drive != "C:\\")
+                if (drive != "C:\\" && drive != "D:\\")
                 {
-                    Scan(drive, drive.Split(':')[0]);
+                    this.path = drive;
+                    Scan(drive, drive.Split(':')[0],true);
                 }
                 
             }
@@ -83,17 +87,26 @@ namespace beSecure.BLL
             
         }
 
-        public void Scan(string path, string driveletter = "\0")
+        public void Scan(string path, string driveletter = "\0",bool isQuick=false)
         {
             try {
                 String[] files;
                 if (driveletter != "\0")
                 {
-                    files = Directory.GetFiles(path);
+
+                    if (isQuick)
+                    {
+                        files = Directory.GetFiles(path,".exe");
+                    }
+                    else
+                    {
+                        files = Directory.GetFiles(path);
+                    }
+                    
                 }
                 else
                 {
-                    files = Directory.GetFiles(path, "*.exe*", SearchOption.AllDirectories);
+                    files = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
                 }
            
             String[] nextDirecties = Directory.GetDirectories(path);
@@ -102,7 +115,7 @@ namespace beSecure.BLL
             {
                     CurrentFile = file;
                 scannedFiles.Add(verifyFile(file));
-                updateForm(1, file); 
+                updateForm(++ProcessednoFiles, file); 
             }
 
             if (nextDirecties.Length != 0)
@@ -113,8 +126,17 @@ namespace beSecure.BLL
                     {
                         if(dir != driveletter+":\\System Volume Information" && dir != driveletter + ":\\$RECYCLE.BIN" && dir!= "C:\\Documents" && dir!="C:\\Settings")
                         {
-                            Scan(dir,driveletter);
+                                if (isQuick)
+                                {
+                                    Scan(dir, driveletter,true);
+                                }
+                                else
+                                {
+                                    Scan(dir, driveletter);
+                                }
                         }
+
+
                     }
                     else
                     {
@@ -248,7 +270,31 @@ namespace beSecure.BLL
         {
             return CurrentFile;
         }
-       
+        
+        public void getAllFiles()
+        {
+            if (this.path.Length == 3)
+            {
+                int total = Directory.GetFiles(path).Length;
+                string dir = this.path.Split(':')[0];
+                foreach (var item in Directory.GetDirectories(@path))
+                {
+                    if(item!= dir+ ":\\System Volume Information" && item != dir + ":\\$RECYCLE.BIN" && item != "C:\\Documents" && dir != ":\\Settings")
+                    {
+                        total+= Directory.GetFiles(item, "*", SearchOption.AllDirectories).Length;
+                    }
+                }
+                this.noOfFiles = total;
+                //return total;
+            }
+            else
+            {
+                int total1 = Directory.GetFiles(this.path, "*", SearchOption.AllDirectories).Length;
+                this.noOfFiles = total1;
+            }
+            
+            //return total1;
+        }
 
 
     }

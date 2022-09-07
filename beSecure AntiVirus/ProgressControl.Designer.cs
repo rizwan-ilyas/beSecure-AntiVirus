@@ -24,11 +24,16 @@ namespace beSecure_AntiVirus
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.CircularBar = new CircularProgressBar.CircularProgressBar();
             this.lblFiles = new System.Windows.Forms.Label();
             this.lblProcessing = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
+            this.WaitProgress = new CircularProgressBar.CircularProgressBar();
+            this.filetimer = new System.Windows.Forms.Timer(this.components);
+            this.lblnoFiles = new System.Windows.Forms.Label();
+            this.lblscan = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // CircularBar
@@ -36,7 +41,7 @@ namespace beSecure_AntiVirus
             this.CircularBar.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
             this.CircularBar.AnimationSpeed = 500;
             this.CircularBar.BackColor = System.Drawing.Color.Transparent;
-            this.CircularBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 72F, System.Drawing.FontStyle.Bold);
+            this.CircularBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CircularBar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.CircularBar.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.CircularBar.InnerMargin = 2;
@@ -49,29 +54,30 @@ namespace beSecure_AntiVirus
             this.CircularBar.OuterWidth = 26;
             this.CircularBar.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.CircularBar.ProgressWidth = 15;
-            this.CircularBar.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 36F);
+            this.CircularBar.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CircularBar.Size = new System.Drawing.Size(200, 200);
             this.CircularBar.StartAngle = 270;
             this.CircularBar.SubscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
             this.CircularBar.SubscriptMargin = new System.Windows.Forms.Padding(10, -35, 0, 0);
-            this.CircularBar.SubscriptText = ".23";
+            this.CircularBar.SubscriptText = "";
             this.CircularBar.SuperscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
             this.CircularBar.SuperscriptMargin = new System.Windows.Forms.Padding(10, 35, 0, 0);
-            this.CircularBar.SuperscriptText = "°C";
+            this.CircularBar.SuperscriptText = "";
             this.CircularBar.TabIndex = 0;
-            this.CircularBar.TextMargin = new System.Windows.Forms.Padding(8, 8, 0, 0);
+            this.CircularBar.Text = "100%";
+            this.CircularBar.TextMargin = new System.Windows.Forms.Padding(8);
             this.CircularBar.Value = 68;
-            this.CircularBar.Click += new System.EventHandler(this.CircularBar_Click);
             // 
             // lblFiles
             // 
             this.lblFiles.AutoSize = true;
             this.lblFiles.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFiles.Location = new System.Drawing.Point(207, 303);
+            this.lblFiles.Location = new System.Drawing.Point(93, 308);
             this.lblFiles.Name = "lblFiles";
-            this.lblFiles.Size = new System.Drawing.Size(116, 16);
+            this.lblFiles.Size = new System.Drawing.Size(101, 16);
             this.lblFiles.TabIndex = 1;
-            this.lblFiles.Text = "This will show files";
+            this.lblFiles.Text = "Sacning Files....";
+            this.lblFiles.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblProcessing
             // 
@@ -88,10 +94,69 @@ namespace beSecure_AntiVirus
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker1_DoWork);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker1_RunWorkerCompleted);
             // 
+            // WaitProgress
+            // 
+            this.WaitProgress.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
+            this.WaitProgress.AnimationSpeed = 250;
+            this.WaitProgress.BackColor = System.Drawing.Color.Transparent;
+            this.WaitProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 72F, System.Drawing.FontStyle.Bold);
+            this.WaitProgress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.WaitProgress.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.WaitProgress.InnerMargin = 2;
+            this.WaitProgress.InnerWidth = -1;
+            this.WaitProgress.Location = new System.Drawing.Point(277, 57);
+            this.WaitProgress.MarqueeAnimationSpeed = 2000;
+            this.WaitProgress.Name = "WaitProgress";
+            this.WaitProgress.OuterColor = System.Drawing.Color.Gray;
+            this.WaitProgress.OuterMargin = -25;
+            this.WaitProgress.OuterWidth = 20;
+            this.WaitProgress.ProgressColor = System.Drawing.Color.Aquamarine;
+            this.WaitProgress.ProgressWidth = 30;
+            this.WaitProgress.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 36F);
+            this.WaitProgress.Size = new System.Drawing.Size(267, 263);
+            this.WaitProgress.StartAngle = 270;
+            this.WaitProgress.SubscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
+            this.WaitProgress.SubscriptMargin = new System.Windows.Forms.Padding(10, -35, 0, 0);
+            this.WaitProgress.SubscriptText = ".23";
+            this.WaitProgress.SuperscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
+            this.WaitProgress.SuperscriptMargin = new System.Windows.Forms.Padding(10, 35, 0, 0);
+            this.WaitProgress.SuperscriptText = "";
+            this.WaitProgress.TabIndex = 3;
+            this.WaitProgress.TextMargin = new System.Windows.Forms.Padding(8, 8, 0, 0);
+            this.WaitProgress.Value = 68;
+            // 
+            // filetimer
+            // 
+            this.filetimer.Enabled = true;
+            this.filetimer.Tick += new System.EventHandler(this.Filetimer_Tick);
+            // 
+            // lblnoFiles
+            // 
+            this.lblnoFiles.AutoSize = true;
+            this.lblnoFiles.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblnoFiles.Location = new System.Drawing.Point(93, 132);
+            this.lblnoFiles.Name = "lblnoFiles";
+            this.lblnoFiles.Size = new System.Drawing.Size(15, 16);
+            this.lblnoFiles.TabIndex = 4;
+            this.lblnoFiles.Text = "0";
+            // 
+            // lblscan
+            // 
+            this.lblscan.AutoSize = true;
+            this.lblscan.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblscan.Location = new System.Drawing.Point(135, 132);
+            this.lblscan.Name = "lblscan";
+            this.lblscan.Size = new System.Drawing.Size(94, 16);
+            this.lblscan.TabIndex = 5;
+            this.lblscan.Text = "Files Scanned";
+            // 
             // ProgressControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblscan);
+            this.Controls.Add(this.lblnoFiles);
+            this.Controls.Add(this.WaitProgress);
             this.Controls.Add(this.lblProcessing);
             this.Controls.Add(this.lblFiles);
             this.Controls.Add(this.CircularBar);
@@ -110,5 +175,9 @@ namespace beSecure_AntiVirus
         private System.Windows.Forms.Label lblProcessing;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.ComponentModel.BackgroundWorker backgroundWorker2;
+        private CircularProgressBar.CircularProgressBar WaitProgress;
+        private System.Windows.Forms.Timer filetimer;
+        private System.Windows.Forms.Label lblnoFiles;
+        private System.Windows.Forms.Label lblscan;
     }
 }
