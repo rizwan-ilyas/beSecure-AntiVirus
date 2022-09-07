@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using beSecure.BLL;
 using System.Threading;
 using System.IO;
+using beSecure.Common;
 
 namespace beSecure_AntiVirus
 {
@@ -17,18 +18,19 @@ namespace beSecure_AntiVirus
     {
         public AVengine avEngine;
         string path;
-        bool isQuickScan;
+        int scanType;
         public processing process;
         public ProgressControl()
         {
             InitializeComponent();
+            scanType = 0;
         }
 
-        public ProgressControl(bool isQuickScane)
+        public ProgressControl(int scanType)
         {
             InitializeComponent();
-            this.isQuickScan = isQuickScane;
-            //avEngine = new AVengine();
+            this.scanType=scanType;
+
         }
 
 
@@ -37,6 +39,7 @@ namespace beSecure_AntiVirus
             InitializeComponent();
            // avEngine = new AVengine();
             this.path = path;
+            scanType = 0;
         }
         
         public void StartScannig()
@@ -46,29 +49,38 @@ namespace beSecure_AntiVirus
 
         private void AvEngine_updateForm(int id, string file)
         {
+            this.label1.Text = avEngine.noOfFiles.ToString();
             this.lblFiles.Text = file;
-            int b = avEngine.noOfFiles;
-            int na = id * 100 / avEngine.noOfFiles;
-            lblnoFiles.Text = id.ToString();
+            int nFile = avEngine.noOfFiles-1;
+            int na = id * 100 / nFile;
+            lblnoFiles.Text = (id-1).ToString();
             CircularBar.Text = na.ToString() + "%";
-            CircularBar.Value = na;
+            if (na <= 100)
+            {
+                CircularBar.Value = na;
+            }
+            
         }
 
-        public void updateVirusList()
+        public List<VirusInfo> updateVirusList()
         {
             try
             {
+                List<VirusInfo> viruses = new List<VirusInfo>();
                 string data = "";
                 foreach (var item in avEngine.getBlackListedFiles())
                 {
                     data += item.name.Split('\\').Last() + "," + item.name + "," + item.time.ToString() + "\n";
+                    viruses.Add(new VirusInfo() { name = item.name.Split('\\').Last(), previousLocation = item.name, date = item.time.ToString() });
                 }
                 
                 File.AppendAllText("Viruses.txt", data);
+                return viruses;
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
+                return null;
             }
         }
        //ChromeSetup.exe
@@ -76,8 +88,8 @@ namespace beSecure_AntiVirus
 
         private void ProgressControl_Load(object sender, EventArgs e)
         {
-            //this.BeginInvoke((MethodInvoker)this.SomeMethod);
             this.StartScannig();
+
         }
 
         
@@ -88,30 +100,79 @@ namespace beSecure_AntiVirus
             {
                 
                 avEngine = new AVengine();
-                if (isQuickScan)
+                process += filetimer.Start;
+               
+
+                if (scanType==1)
                 {
-                    avEngine.QuickScan();
-                    //avEngine.path = path;
+                    String drive = "";
+                    //DriveInfo.GetDrives()
+                    //string[] s ={ "E:\\", "D:\\" } ;
+                    foreach (var d in DriveInfo.GetDrives())
+                    {
+                        drive = @d.ToString();
+                        if (drive != "C:\\")
+                        {
+                            process += filetimer.Start;
+                            avEngine.path = drive;
+                            avEngine.getAllFiles(true);
+
+                            //process += stopTimer;
+                            Invoke((MethodInvoker)(() => {
+                                stopTimer();
+                                Invalidate();
+                                Refresh();
+                            }));
+
+                            avEngine.updateForm += AvEngine_updateForm;
+                            avEngine.QuickScan();
+                        }
+
+                    }
+
+                }
+                else if (scanType==2)
+                {
+                    String drive = "";
+                    
+                    //string[] s = { "E:\\", "D:\\" };
+                    foreach (var d in DriveInfo.GetDrives())
+                    {
+                        process += filetimer.Start;
+                        drive = @d.ToString();
+                        if (drive != "C:\\")
+                        {
+                            process += filetimer.Start;
+                            avEngine.path = drive;
+                            avEngine.getAllFiles();
+                            Invoke((MethodInvoker)(() => {
+                                stopTimer();
+                                Invalidate();
+                                Refresh();
+                            }));
+
+                            avEngine.updateForm += AvEngine_updateForm;
+                            avEngine.CompleteScan();
+                        }
+
+                    }
                 }
                 else
                 {
                     avEngine.path = path;
-                }
-                
-                filetimer.Start();
-                avEngine.getAllFiles();
-
-                lblProcessing.Text = "File Scannning is In Progress....";
-                //filetimer.Stop();
-                WaitProgress.Visible = false;
-
-                avEngine.updateForm += AvEngine_updateForm;
-                if (!isQuickScan)
-                {
+                    avEngine.getAllFiles();
+                    Invoke((MethodInvoker)(() => {
+                        stopTimer();
+                        Invalidate();
+                        Refresh();
+                        avEngine.updateForm += AvEngine_updateForm;
+                    }));
+                    
                     avEngine.CustomScan();
                 }
-                //Thread scanThread = new Thread(new ThreadStart(avEngine.CustomScan));
-                //scanThread.Start();
+
+                
+                
 
             }
             catch (Exception eee)
@@ -120,12 +181,26 @@ namespace beSecure_AntiVirus
             }
         }
 
-        private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void BackgroundWorker1_RunWorkerCompleted(object sesnder, RunWorkerCompletedEventArgs e)
         {
             //scanThread.Abort();
+
+            CircularBar.Text = "Scanning Done";
+            Thread.Sleep(100);
+            HistoryControl history = new HistoryControl();
+            addUserControl(history);
         }
 
-        private void stopTimer()
+        public void addUserControl(UserControl usrcontrl)
+        {
+            usrcontrl.Dock = DockStyle.Fill;
+            this.Controls.Clear();
+            this.Controls.Add(usrcontrl);
+            usrcontrl.BringToFront();
+        }
+
+
+        public void stopTimer()
         {
             lblProcessing.Text = "File Scannning is In Progress....";
             filetimer.Stop();

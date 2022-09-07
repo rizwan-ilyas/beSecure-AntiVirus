@@ -35,7 +35,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.pnlHeader = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lbldays = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnHistory = new System.Windows.Forms.Button();
@@ -105,7 +105,7 @@
             // 
             this.pnlHeader.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.pnlHeader.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlHeader.Controls.Add(this.label5);
+            this.pnlHeader.Controls.Add(this.lbldays);
             this.pnlHeader.Controls.Add(this.label2);
             this.pnlHeader.Controls.Add(this.label4);
             this.pnlHeader.Controls.Add(this.btnHistory);
@@ -120,15 +120,15 @@
             this.pnlHeader.Size = new System.Drawing.Size(800, 138);
             this.pnlHeader.TabIndex = 2;
             // 
-            // label5
+            // lbldays
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(106, 107);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(81, 16);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "0 days ago";
+            this.lbldays.AutoSize = true;
+            this.lbldays.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbldays.Location = new System.Drawing.Point(106, 107);
+            this.lbldays.Name = "lbldays";
+            this.lbldays.Size = new System.Drawing.Size(81, 16);
+            this.lbldays.TabIndex = 11;
+            this.lbldays.Text = "0 days ago";
             // 
             // label2
             // 
@@ -254,7 +254,7 @@
         private System.Windows.Forms.Button btnHistory;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnSetting;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lbldays;
         private System.Windows.Forms.Label label2;
     }
 }

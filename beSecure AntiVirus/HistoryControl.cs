@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using beSecure.Common;
 
 namespace beSecure_AntiVirus
 {
@@ -17,6 +18,48 @@ namespace beSecure_AntiVirus
         {
             InitializeComponent();
         }
+/*
+        private void LoadHistoryControl(List<VirusInfo> virus)
+        {
+            try
+            {
+                string[] header = { "Name", "Previous Location", "Date" };
+
+                DataTable dt = new DataTable();
+
+                foreach (var i in header)
+                {
+                    dt.Columns.Add(i);
+                }
+
+                foreach (var item in virus)
+                {
+
+                        DataRow row = dt.NewRow();
+                    row[0] = item.name;
+                    row[1] = item.previousLocation;
+                    row[2] =item.date;
+         
+                        dt.Rows.Add(row);
+                    
+
+                }
+
+                dataGridHistory.DataSource = dt;
+                dataGridHistory.Columns[0].Width = 200;
+                dataGridHistory.Columns[1].Width = 300;
+                dataGridHistory.Columns[2].Width = 170;
+                //dataGridHistory.CurrentRow.Selected = false;
+
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+*/
 
         private void HistoryControl_Load(object sender, EventArgs e)
         {

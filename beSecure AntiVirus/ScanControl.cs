@@ -27,13 +27,15 @@ namespace beSecure_AntiVirus
 
         private void PicFullscan_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Full scan");
+            //MessageBox.Show("Full scan");
+            ProgressControl progress = new ProgressControl(2);
+            addUserControl(progress);
         }
 
         private void PicQuickscan_Click(object sender, EventArgs e)
         {
 
-            ProgressControl progress = new ProgressControl(true);
+            ProgressControl progress = new ProgressControl(1);
             addUserControl(progress);
 
 

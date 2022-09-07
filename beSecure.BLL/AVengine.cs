@@ -60,19 +60,14 @@ namespace beSecure.BLL
         }
 
 
+        public void CompleteScan()
+        {
+            Scan(@path, path.Split(':')[0]);
+        }
+
         public void QuickScan()
         {
-            String drive="";
-            foreach (var d in DriveInfo.GetDrives())
-            {
-                drive = @d.ToString();
-                if (drive != "C:\\" && drive != "D:\\")
-                {
-                    this.path = drive;
-                    Scan(drive, drive.Split(':')[0],true);
-                }
-                
-            }
+            Scan(@path, path.Split(':')[0],true);
         }
 
         public void CustomScan()
@@ -96,7 +91,7 @@ namespace beSecure.BLL
 
                     if (isQuick)
                     {
-                        files = Directory.GetFiles(path,".exe");
+                        files = Directory.GetFiles(path,"*.exe*");
                     }
                     else
                     {
@@ -115,7 +110,7 @@ namespace beSecure.BLL
             {
                     CurrentFile = file;
                 scannedFiles.Add(verifyFile(file));
-                updateForm(++ProcessednoFiles, file); 
+                updateForm(ProcessednoFiles++, file);
             }
 
             if (nextDirecties.Length != 0)
@@ -271,17 +266,34 @@ namespace beSecure.BLL
             return CurrentFile;
         }
         
-        public void getAllFiles()
+        public void getAllFiles(bool isQuickScan=false)
         {
+            int total;
             if (this.path.Length == 3)
             {
-                int total = Directory.GetFiles(path).Length;
+                if (isQuickScan)
+                {
+                    total = Directory.GetFiles(path,"*.exe*").Length;
+                }
+                else
+                {
+                    total = Directory.GetFiles(path,"*.*").Length;
+                }
+                
                 string dir = this.path.Split(':')[0];
                 foreach (var item in Directory.GetDirectories(@path))
                 {
                     if(item!= dir+ ":\\System Volume Information" && item != dir + ":\\$RECYCLE.BIN" && item != "C:\\Documents" && dir != ":\\Settings")
                     {
-                        total+= Directory.GetFiles(item, "*", SearchOption.AllDirectories).Length;
+                        if (isQuickScan)
+                        {
+                            total += Directory.GetFiles(item, "*.exe*").Length;
+                        }
+                        else
+                        {
+                            total += Directory.GetFiles(item, "*.*").Length;
+                        }
+                       
                     }
                 }
                 this.noOfFiles = total;
@@ -289,7 +301,7 @@ namespace beSecure.BLL
             }
             else
             {
-                int total1 = Directory.GetFiles(this.path, "*", SearchOption.AllDirectories).Length;
+                int total1 = Directory.GetFiles(this.path, "*.*", SearchOption.AllDirectories).Length;
                 this.noOfFiles = total1;
             }
             

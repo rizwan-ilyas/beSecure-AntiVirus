@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace beSecure.BLL
 {
     public delegate void UpdateControlDel(int id, String Folder);
-    public delegate void processing(bool isStart=true);
+    public delegate void processing();
 }
 
 

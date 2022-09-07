@@ -38,6 +38,13 @@ namespace beSecure.Common
         public DateTime time { get; set; }
     }
 
+    public class VirusInfo
+    {
+        public String name { get; set; }
+
+        public string previousLocation { get; set; }
+        public String date { get; set; }
+    }
 
 
 }
