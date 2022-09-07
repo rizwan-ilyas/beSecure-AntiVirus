@@ -34,10 +34,16 @@ namespace beSecure_AntiVirus
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            
+            lbldays.Text = getDays().ToString();
         }
 
-       
+        private static int getDays()
+        {
+            return  (DateTime.Now - Convert.ToDateTime("05/09/2022")).Days;
+            //return  (DateTime.Now - Convert.ToDateTime(ConfigurationManager.AppSettings["lastdate"])).Days;
+        }
+
+
 
         
         

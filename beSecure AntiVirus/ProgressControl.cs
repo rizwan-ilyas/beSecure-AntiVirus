@@ -11,6 +11,7 @@ using beSecure.BLL;
 using System.Threading;
 using System.IO;
 using beSecure.Common;
+using System.Configuration;
 
 namespace beSecure_AntiVirus
 {
@@ -187,9 +188,12 @@ namespace beSecure_AntiVirus
 
             CircularBar.Text = "Scanning Done";
             Thread.Sleep(100);
+
             HistoryControl history = new HistoryControl();
             addUserControl(history);
         }
+
+        
 
         public void addUserControl(UserControl usrcontrl)
         {
