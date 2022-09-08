@@ -34,19 +34,28 @@ namespace beSecure_AntiVirus
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            lbldays.Text = getDays().ToString();
+            //setTimeNow();
+            //lbldays.Text = getDays();
         }
 
-        private static int getDays()
-        {
-            return  (DateTime.Now - Convert.ToDateTime("05/09/2022")).Days;
-            //return  (DateTime.Now - Convert.ToDateTime(ConfigurationManager.AppSettings["lastdate"])).Days;
-        }
+        //private static string getDays()
+        //{
+            
+        //    return Convert.ToDateTime("date").ToString();
+        //    //return  (DateTime.Now - Convert.ToDateTime(ConfigurationManager.AppSettings.Get("date"))).Days;
+        //}
+
+        //public static void setTimeNow()
+        //{
+        //    Configuration configration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+        //    configration.AppSettings.Settings["date"].Value = "10/09/2022";
+        //    configration.Save(ConfigurationSaveMode.Modified);
+        //    //ConfigurationManager.RefreshSection("appSettings");
+        //}
 
 
 
-        
-        
+
         private void Label4_Click(object sender, EventArgs e)
         {
 

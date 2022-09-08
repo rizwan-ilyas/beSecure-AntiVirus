@@ -193,7 +193,14 @@ namespace beSecure_AntiVirus
             addUserControl(history);
         }
 
-        
+        public static void setTimeNow()
+        {
+            Configuration configration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            configration.AppSettings.Settings["date"].Value = DateTime.Now.ToString();
+            configration.Save(ConfigurationSaveMode.Full, true);
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+
 
         public void addUserControl(UserControl usrcontrl)
         {
